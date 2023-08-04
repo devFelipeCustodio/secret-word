@@ -1,0 +1,11 @@
+.letter {
+    --size: min(calc(4vw + 1rem), 6rem);
+    background-color: whitesmoke;
+    outline: 4px solid black;
+    display: inline-block;
+    width: var(--size);
+    font-size: var(--size);
+    color: black;
+    font-weight: 700;
+    text-transform: uppercase;
+}

@@ -1,0 +1,54 @@
+:root {
+    font-family: system-ui;
+    font-size: 18px;
+    color-scheme: dark;
+}
+
+* {
+    margin: 0;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100dvh;
+    background-image: linear-gradient(rgb(15, 15, 143), black);
+    display: grid;
+    justify-content: center;
+    text-shadow: 0 1px 0 black;
+}
+
+.text-bold {
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+button {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.7em 3em;
+    border-radius: 100vw;
+    border: 2px solid white;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.171);
+    transition: all ease-in-out 150ms;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}

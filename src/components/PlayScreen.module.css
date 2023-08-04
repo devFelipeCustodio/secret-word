@@ -1,0 +1,58 @@
+.game_info {
+    display: grid;
+    gap: 1.7rem;
+}
+
+.score_number {
+    font-weight: 400;
+}
+
+.hint {
+    color: yellow;
+}
+
+.word_container {
+    --padding: clamp(0px, calc(1px + 1.2vw), 3rem);
+    --thickness: clamp(0px, calc(1px + 1.2vw), 3rem);
+    margin: var(--thickness);
+    padding: var(--padding);
+    border: 3px solid black;
+    outline: var(--thickness) solid yellow;
+    box-shadow: 0 0 0 var(--thickness) black;
+}
+
+.letters_container {
+    box-shadow: 0 0 15px 2px black;
+    display: flex;
+    justify-items: center;
+}
+
+.letters_container > * {
+    flex-shrink: 1;
+}
+
+.user_interaction {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.letter_input {
+    background-color: white;
+    border: 2px solid black;
+    outline: none;
+    width: 3rem;
+    aspect-ratio: 1;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+}
