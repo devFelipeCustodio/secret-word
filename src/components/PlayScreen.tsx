@@ -101,8 +101,6 @@ const PlayScreen = ({
     const inputRef = useRef<null | HTMLInputElement>(null);
 
     // logic
-    console.log(word[1]);
-
     const checkLetter = (e: FormEvent) => {
         e.preventDefault();
         inputRef.current && inputRef.current.focus();
