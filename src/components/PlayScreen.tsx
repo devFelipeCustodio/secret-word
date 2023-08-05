@@ -1,4 +1,4 @@
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import Letter from './Letter';
 import styles from './PlayScreen.module.css';
 import { EGameState } from '../App';
@@ -93,38 +93,41 @@ const PlayScreen = ({
     const calcMaxTries = (word: string) => (word.length > 5 ? 5 : 3);
     // states
     const [word, setWord] = useState(randomWord());
-    const [playerLetter, setPlayerLetter] = useState('');
-    const [lettersLeft, updateLettersLeft] = useState(word[1]);
-    const [tries, updateTries] = useState(emptyArray);
+    const [letter, setLetter] = useState('');
+    const [lettersLeft, setLettersLeft] = useState(word[1]);
+    const [tries, setTries] = useState(emptyArray);
     const [maxTries, setMaxTries] = useState(calcMaxTries(word[1]));
     // refs
     const inputRef = useRef<null | HTMLInputElement>(null);
 
     // logic
+    console.log(word[1]);
+
     const checkLetter = (e: FormEvent) => {
         e.preventDefault();
         inputRef.current && inputRef.current.focus();
-        if (lettersLeft.includes(playerLetter)) {
-            updateLettersLeft((prevLettersLeft) =>
-                prevLettersLeft.replaceAll(playerLetter, '')
+        if (lettersLeft.includes(letter)) {
+            setLettersLeft((prevLettersLeft) =>
+                prevLettersLeft.replaceAll(letter, '')
             );
-            setPlayerLetter('');
-            if (lettersLeft.length === 1) {
-                updateGlobalScore(calcScore(word[1]));
-                newGame();
-            }
+            setLetter('');
             return;
-        } else if (
-            word[1].includes(playerLetter) &&
-            !tries.includes(playerLetter)
-        ) {
-            setPlayerLetter('');
+        } else if (word[1].includes(letter) && !tries.includes(letter)) {
+            setLetter('');
             return;
         }
-        updateTries((prevTries) => [...prevTries, playerLetter]);
+        setTries((prevTries) => [...prevTries, letter]);
         tries.length === maxTries - 1 && setGameState(EGameState.gameover);
-        setPlayerLetter('');
+        setLetter('');
     };
+
+    // win condition
+    useEffect(() => {
+        if (lettersLeft.length < 1) {
+            updateGlobalScore(calcScore(word[1]));
+            newGame();
+        }
+    }, [lettersLeft]);
 
     const calcScore = (word: string): number => {
         let roundScore = 1000 * word.length;
@@ -137,9 +140,9 @@ const PlayScreen = ({
     const newGame = () => {
         const newWord = randomWord();
         setWord(newWord);
-        updateTries(emptyArray);
+        setTries(emptyArray);
         setMaxTries(calcMaxTries(word[1]));
-        updateLettersLeft(newWord[1]);
+        setLettersLeft(newWord[1]);
         setGameState(EGameState.started);
     };
 
@@ -183,10 +186,10 @@ const PlayScreen = ({
                         pattern="[a-zçãáàâéèêíìîóòôõúùû]"
                         autoFocus
                         ref={inputRef}
-                        value={playerLetter}
+                        value={letter}
                         required
                         onChange={(e) => {
-                            setPlayerLetter(e.target.value.toLowerCase());
+                            setLetter(e.target.value.toLowerCase());
                         }}
                     />
                     <button type="submit">jogar!</button>
