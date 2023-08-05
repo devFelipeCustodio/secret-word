@@ -97,7 +97,6 @@ const PlayScreen = ({
     const [lettersLeft, updateLettersLeft] = useState(word[1]);
     const [tries, updateTries] = useState(emptyArray);
     const [maxTries, setMaxTries] = useState(calcMaxTries(word[1]));
-    console.log(word[1]);
     // refs
     const inputRef = useRef<null | HTMLInputElement>(null);
 
