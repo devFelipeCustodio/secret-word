@@ -97,7 +97,7 @@ const PlayScreen = ({
     const [lettersLeft, updateLettersLeft] = useState(word[1]);
     const [tries, updateTries] = useState(emptyArray);
     const [maxTries, setMaxTries] = useState(calcMaxTries(word[1]));
-
+    console.log(word[1]);
     // refs
     const inputRef = useRef<null | HTMLInputElement>(null);
 
@@ -106,7 +106,9 @@ const PlayScreen = ({
         e.preventDefault();
         inputRef.current && inputRef.current.focus();
         if (lettersLeft.includes(playerLetter)) {
-            updateLettersLeft(lettersLeft.replaceAll(playerLetter, ''));
+            updateLettersLeft((prevLettersLeft) =>
+                prevLettersLeft.replaceAll(playerLetter, '')
+            );
             setPlayerLetter('');
             if (lettersLeft.length === 1) {
                 updateGlobalScore(calcScore(word[1]));
@@ -120,18 +122,18 @@ const PlayScreen = ({
             setPlayerLetter('');
             return;
         }
-        updateTries([...tries, playerLetter]);
+        updateTries((prevTries) => [...prevTries, playerLetter]);
         tries.length === maxTries - 1 && setGameState(EGameState.gameover);
         setPlayerLetter('');
     };
 
     const calcScore = (word: string): number => {
-        let score = 1000 * word.length;
-        const regex = word.match(/[aeiou]/g);
-        if (regex) {
-            score = score / regex.length;
+        let roundScore = 1000 * word.length;
+        const vowels = word.match(/[aeiou]/g);
+        if (vowels) {
+            roundScore = roundScore / vowels.length;
         }
-        return Math.floor(score);
+        return globalScore + Math.floor(roundScore);
     };
     const newGame = () => {
         const newWord = randomWord();
